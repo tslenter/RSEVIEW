@@ -1,0 +1,55 @@
+#!/bin/bash
+
+#License:
+#"Remote Syslog" is a free application what can be used to view syslog messages.
+#Copyright (C) 2021 Tom Slenter
+#
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+#For more information contact the author:
+#Name author: Tom Slenter
+#E-mail: info@remotesyslog.com
+
+#Banner
+echo ""
+echo "##################################################"
+echo "#Remote Syslog Elasticsearch Viewer              #"
+echo "#More information: https://www.remotesyslog.com  #"
+echo "#Remote Syslog viewer for Elasticsearch          #"
+echo "#Version: BETA 0.1 for RSX 0.1                   #"
+echo "#Donations: https://github.com/tslenter/rseview  #"
+echo "##################################################"
+echo ""
+
+#Check if user is root
+if ! [ $(id -u) = 0 ]; then
+    clear
+    banner
+    echo "This installation must be run as root!"
+    echo ""
+    exit 1
+fi
+
+#Copy files
+echo "Copy required files ..."
+cp ./rseview /usr/bin/
+cp ./rseview.php /usr/bin/
+chmod + x /usr/bin/rseview
+
+#Start installation
+echo "Start installation ..."
+apt update
+apt install php-curl
+service apache2 restart
+curl -s http://getcomposer.org/installer | php
+php composer.phar install

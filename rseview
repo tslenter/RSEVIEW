@@ -1,0 +1,83 @@
+#!/bin/bash
+
+#License:
+#"Remote Syslog" is a free application what can be used to view syslog messages.
+#Copyright (C) 2021 Tom Slenter
+#
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+#For more information contact the author:
+#Name author: Tom Slenter
+#E-mail: info@remotesyslog.com
+
+#Banner
+echo ""
+echo "##################################################"
+echo "#Remote Syslog Elasticsearch Viewer              #"
+echo "#More information: https://www.remotesyslog.com  #"
+echo "#Remote Syslog viewer for Elasticsearch          #"
+echo "#Version: BETA 0.1 for RSX 0.1                   #"
+echo "#Donations: https://github.com/tslenter/rseview  #"
+echo "##################################################"
+echo ""
+
+#Variables
+default_buffer=50
+
+#Menu
+function show_options() {
+   echo "Usage rsview:"
+   echo ""
+   echo "-h,--help                          		Display help"
+   echo "-s,--search <search string> <buffer>  		Search through logging"
+   echo "-v,--view                          		View logging"
+   echo "-l,--live                          		View live logging"
+   echo "-ls,--livesearch <search string> <buffer>  	Search through live logging"
+   echo "-t,--testmessage                   		Send a test message"
+   echo ""
+}
+
+#Options
+case $1 in
+-h|--help)
+        show_options
+        ;;
+-s|--search)
+	if [ -z $2 ]; then
+		echo "No search text found ..."
+		exit
+	else
+		php -f rseview.php q=$2 b=${3:-$default_buffer}
+	fi
+        ;;
+-v|--view)
+        php -f rseview.php a=noquery b=${2:-$default_buffer}
+        ;;
+-l|--live)
+        watch -c -n 1 php -f rseview.php a=noquery b=${2:-$default_buffer}
+        ;;
+-ls|--livesearch)
+	if [ -z $2 ]; then
+        	echo "No search text found ..."
+		exit
+	else
+		watch -c -n 1 php -f rseview.php q=$2 b=${3:-$default_buffer}
+	fi
+        ;;
+-t|--testmessage)
+        logger -n 127.0.0.1 -d 'This is a UDP test message!'; logger -T -P 514 -n 127.0.0.1 'This is a TCP test message!'
+        echo "Sending UDP and TCP test message! Check logging!"
+        ;;
+        *)
+        show_options
+esac
