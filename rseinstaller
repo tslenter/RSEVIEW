@@ -52,5 +52,7 @@ echo "Start installation ..."
 apt update
 apt install php-curl -y
 service apache2 restart
+mkdir /opt/rseview
+cd /opt/rseview
 curl -s http://getcomposer.org/installer | php
 php composer.phar install
