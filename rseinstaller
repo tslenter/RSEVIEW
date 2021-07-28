@@ -50,7 +50,7 @@ chmod +x /usr/bin/rseview
 #Start installation
 echo "Start installation ..."
 apt update
-apt install php-curl
+apt install php-curl -y
 service apache2 restart
 curl -s http://getcomposer.org/installer | php
 php composer.phar install
