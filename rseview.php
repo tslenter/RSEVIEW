@@ -8,6 +8,7 @@ if(isset($_GET['q'])) {
 	$b = $_GET['b'];
         $query = $es->search([
 		'size'=> $b,
+		'index' => 'rsx-syslog*',
                 'body'=>[
                         'query' => [
                                 'bool' => [
@@ -30,6 +31,7 @@ if(isset($_GET['a'])) {
         $b = $_GET['b'];
         $query = $es->search([
                 'size'=> $b,
+		'index' => 'rsx-syslog*',
                 'body'=>[
                         'query' => [
                                 'wildcard' => [
