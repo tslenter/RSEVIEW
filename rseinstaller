@@ -45,7 +45,7 @@ echo "Copy required files ..."
 cp ./rseview /usr/bin/
 cp ./rseview.php /usr/bin/
 cp ./rs_init.php /usr/bin/
-chmod + x /usr/bin/rseview
+chmod +x /usr/bin/rseview
 
 #Start installation
 echo "Start installation ..."
