@@ -13,7 +13,7 @@ if(isset($_GET['q'])) {
                         'query' => [
                                 'bool' => [
                                         'should' => [
-						'match' => ['MESSAGE' => $q]
+						'multi_match' => [ 'query' => $q, 'fields'=> ['DATE', 'HOST_FROM', 'MESSAGE']]
                                                 ]
                                         ]
                                 ],
@@ -73,8 +73,10 @@ for ($output_num = $total_results - 1; ; $output_num -= 1){
 	if ($output_num < "0"){
 		break;
 }
-	$output = $results[$output_num]['_source']['MESSAGE'];
-	echo ($output), PHP_EOL;
+	$output_date = $results[$output_num]['_source']['DATE'];
+	$output_host = $results[$output_num]['_source']['HOST_FROM'];
+	$output_message = $results[$output_num]['_source']['MESSAGE'];
+	echo ($output_date . " " . $output_host . " " . $output_message), PHP_EOL;
 }
 die();
 ?>
