@@ -76,7 +76,7 @@ for ($output_num = $total_results - 1; ; $output_num -= 1){
 	$output_date = $results[$output_num]['_source']['DATE'];
 	$output_host = $results[$output_num]['_source']['HOST_FROM'];
 	$output_message = $results[$output_num]['_source']['MESSAGE'];
-	echo ($output_date . " " . $output_host . " " . $output_message), PHP_EOL;
+	echo ("\e[96m$output_date\033[0m" . " " . "\e[32m$output_host\033[0m" . " " . "\e[97m$output_message\033[0m"), PHP_EOL;
 }
 die();
 ?>
