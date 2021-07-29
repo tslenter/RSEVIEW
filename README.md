@@ -59,7 +59,7 @@ All donations and other funds will be used to cover cost of this project and to 
 
 ## 5. License
 
-"Remote Syslog" is a free application that can be used to view syslog messages.
+"rseview" is a free application that can be used to view syslog messages.
 
 Copyright (C) 2021 Tom Slenter
 
