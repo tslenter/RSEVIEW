@@ -20,12 +20,7 @@
 #Name author: Tom Slenter
 #E-mail: info@remotesyslog.com
 
-#Variables
-RSCONF=/opt/rseview
-RSPATH=$(pwd)
-RSDEST=/opt/RS
-UB_PATH=/usr/bin
-
+#Banner
 function banner() {
     echo ""
     echo "##################################################"
@@ -37,38 +32,4 @@ function banner() {
     echo "##################################################"
     echo ""
 }
-
-#Check if user is root
-if ! [ $(id -u) = 0 ]; then
-    clear
-    banner
-    echo "This installation must be run as root!"
-    echo ""
-    exit 1
-else
-    clear
-    banner
-fi
-
-#Copy files
-echo "Copy required files ..."
-if [ -e "$RSCONF" ]; then
-	echo "$RSCONF already created ..."
-else
-	echo "$RSCONF created ..."
-	mkdir $RSCONF/
-fi
-cp -rf $RSPATH/* $RSCONF/
-cp $RSCONF/rseview $UB_PATH/
-chmod +x $UB_PATH/rseview
-chmod +x $RSCONF/rseview.php
-chmod +x $RSCONF/rs_init.php
-chmod +x $RSCONF/rsbanner
-
-#Start installation
-echo "Start installation ..."
-apt update
-apt install php-curl -y
-service apache2 restart
-curl -s http://getcomposer.org/installer | php
-php composer.phar install --quiet --no-interaction --working-dir=$RSCONF
+banner

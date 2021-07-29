@@ -21,19 +21,23 @@
 #E-mail: info@remotesyslog.com
 
 #Banner
-echo ""
-echo "##################################################"
-echo "#Remote Syslog Elasticsearch Viewer              #"
-echo "#More information: https://www.remotesyslog.com  #"
-echo "#Remote Syslog viewer for Elasticsearch          #"
-echo "#Version: BETA 0.1 for RSX 0.1                   #"
-echo "#Donations: https://github.com/tslenter/rseview  #"
-echo "##################################################"
-echo ""
+function banner() {
+    echo ""
+    echo "##################################################"
+    echo "#Remote Syslog Elasticsearch Viewer              #"
+    echo "#More information: https://www.remotesyslog.com  #"
+    echo "#Remote Syslog viewer for Elasticsearch          #"
+    echo "#Version: BETA 0.1 for RSX 0.1                   #"
+    echo "#Donations: https://github.com/tslenter/rseview  #"
+    echo "##################################################"
+    echo ""
+}
 
 #Variables
 default_buffer=50
 RSCONF=/opt/rseview
+
+banner
 
 #Menu
 function show_options() {
@@ -65,14 +69,14 @@ case $1 in
         php -f $RSCONF/rseview.php a=noquery b=${2:-$default_buffer}
         ;;
 -l|--live)
-        watch -c -n 1 --color "php -f $RSCONF/rseview.php a=noquery b=${2:-$default_buffer}"
+        watch -c -n 1 "$RSCONF/rsbanner;  php -f $RSCONF/rseview.php a=noquery b=${2:-$default_buffer}"
         ;;
 -ls|--livesearch)
 	if [ -z $2 ]; then
         	echo "No search text found ..."
 		exit
 	else
-		watch -c -n 1 --color "php -f $RSCONF/rseview.php q=$2 b=${3:-$default_buffer}"
+		watch -c -n 1 "$RSCONF/rsbanner;  php -f $RSCONF/rseview.php q=$2 b=${3:-$default_buffer}"
 	fi
         ;;
 -t|--testmessage)
