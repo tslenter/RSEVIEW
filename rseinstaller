@@ -45,6 +45,9 @@ if ! [ $(id -u) = 0 ]; then
     echo "This installation must be run as root!"
     echo ""
     exit 1
+else
+    clear
+    banner
 fi
 
 #Copy files
