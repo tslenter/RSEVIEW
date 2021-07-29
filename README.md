@@ -32,6 +32,21 @@ Options:
 <buffer> is lines displayed within the CLI.
 ```
 
+### 3.4 Example output:
+```
+##################################################
+#Remote Syslog Elasticsearch Viewer              #
+#More information: https://www.remotesyslog.com  #
+#Remote Syslog viewer for Elasticsearch          #
+#Version: BETA 0.1 for RSX 0.1                   #
+#Donations: https://github.com/tslenter/rseview  #
+##################################################
+
+3c08.f611.ac00: *Jul 29 09:47:53.091: %WIDS-4-SIG_ALARM: Attack is detected on Sig:Standard Id:2 Channel:1 Source MAC:0432.f417.8d87
+c89c.1da8.0010: *Jul 29 09:47:54.753: %WIDS-4-SIG_ALARM: Attack is detected on Sig:Standard Id:2 Channel:1 Source MAC:0432.f417.8d87
+c89c.1da8.0322: *Jul 29 09:47:53.802: %WIDS-4-SIG_ALARM: Attack is detected on Sig:Standard Id:2 Channel:1 Source MAC:0432.f417.8d87
+```
+
 ## 4. Donation and help
 
 ### 4.1 Donation
