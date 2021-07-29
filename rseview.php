@@ -13,7 +13,7 @@ if(isset($_GET['q'])) {
                         'query' => [
                                 'bool' => [
                                         'should' => [
-						'multi_match' => [ 'query' => $q, 'fields'=> ['DATE', 'HOST_FROM', 'MESSAGE', 'LEGACY_MSGHDR']]
+						'query_string' => [ 'query' => $q, 'fields'=> ['DATE', 'HOST_FROM', 'MESSAGE', 'LEGACY_MSGHDR']],
                                                 ]
                                         ]
                                 ],

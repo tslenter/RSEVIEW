@@ -69,14 +69,14 @@ case $1 in
         php -f $RSCONF/rseview.php a=noquery b=${2:-$default_buffer}
         ;;
 -l|--live)
-        watch -c -n 1 "$RSCONF/rsbanner;  php -f $RSCONF/rseview.php a=noquery b=${2:-$default_buffer}"
+        watch -c -n 1 "$RSCONF/rsbanner; php -f $RSCONF/rseview.php a=noquery b=${2:-$default_buffer}"
         ;;
 -ls|--livesearch)
 	if [ -z $2 ]; then
         	echo "No search text found ..."
 		exit
 	else
-		watch -c -n 1 "$RSCONF/rsbanner;  php -f $RSCONF/rseview.php q=$2 b=${3:-$default_buffer}"
+		watch -c -n 1 "$RSCONF/rsbanner; php -f $RSCONF/rseview.php q=$2 b=${3:-$default_buffer}"
 	fi
         ;;
 -t|--testmessage)
