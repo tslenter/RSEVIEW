@@ -26,8 +26,11 @@ Run the rseview command with the following options:
 -t,--testmessage                                Send a test message
 ```
 
+Options:
+```
 <search string> is text what can be found.
-<buffer> is lines displayed within the CLI.  
+<buffer> is lines displayed within the CLI.
+```
 
 ### 3.3 Usage:
 
