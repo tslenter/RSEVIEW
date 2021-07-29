@@ -46,24 +46,13 @@ if ! [ $(id -u) = 0 ]; then
     exit 1
 fi
 
-#Copy files
+#Remove files
 echo "Copy required files ..."
 if [ -e "$RSCONF" ]; then
-	echo "$RSCONF already created ..."
+	echo "$RSCONF found ..."
+	rm -rf $RSCONF/
 else
-	echo "$RSCONF created ..."
-	mkdir $RSCONF/
+	echo "$RSCONF skipped ..."
 fi
-cp -rf $RSPATH/* $RSCONF/
-cp $RSCONF/rseview $UB_PATH/
-chmod +x $UB_PATH/rseview
-chmod +x $RSCONF/rseview.php
-chmod +x $RSCONF/rs_init.php
-
-#Start installation
-echo "Start installation ..."
-apt update
-apt install php-curl -y
-service apache2 restart
-curl -s http://getcomposer.org/installer | php
-php composer.phar install --quiet --no-interaction --working-dir=$RSCONF
+rm -rf $UB_PATH/rseview
+echo "Removal done!"

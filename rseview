@@ -33,6 +33,7 @@ echo ""
 
 #Variables
 default_buffer=50
+RSCONF=/opt/rseview
 
 #Menu
 function show_options() {
@@ -57,21 +58,21 @@ case $1 in
 		echo "No search text found ..."
 		exit
 	else
-		php -f rseview.php q=$2 b=${3:-$default_buffer}
+		php -f $RSCONF/rseview.php q=$2 b=${3:-$default_buffer}
 	fi
         ;;
 -v|--view)
-        php -f rseview.php a=noquery b=${2:-$default_buffer}
+        php -f $RSCONF/rseview.php a=noquery b=${2:-$default_buffer}
         ;;
 -l|--live)
-        watch -c -n 1 php -f rseview.php a=noquery b=${2:-$default_buffer}
+        watch -c -n 1 php -f $RSCONF/rseview.php a=noquery b=${2:-$default_buffer}
         ;;
 -ls|--livesearch)
 	if [ -z $2 ]; then
         	echo "No search text found ..."
 		exit
 	else
-		watch -c -n 1 php -f rseview.php q=$2 b=${3:-$default_buffer}
+		watch -c -n 1 php -f $RSCONF/rseview.php q=$2 b=${3:-$default_buffer}
 	fi
         ;;
 -t|--testmessage)
