@@ -26,20 +26,22 @@ RSPATH=$(pwd)
 RSDEST=/opt/RS
 UB_PATH=/usr/bin
 
-#Banner
-echo ""
-echo "##################################################"
-echo "#Remote Syslog Elasticsearch Viewer              #"
-echo "#More information: https://www.remotesyslog.com  #"
-echo "#Remote Syslog viewer for Elasticsearch          #"
-echo "#Version: BETA 0.1 for RSX 0.1                   #"
-echo "#Donations: https://github.com/tslenter/rseview  #"
-echo "##################################################"
-echo ""
+function banner() {
+    echo ""
+    echo "##################################################"
+    echo "#Remote Syslog Elasticsearch Viewer              #"
+    echo "#More information: https://www.remotesyslog.com  #"
+    echo "#Remote Syslog viewer for Elasticsearch          #"
+    echo "#Version: BETA 0.1 for RSX 0.1                   #"
+    echo "#Donations: https://github.com/tslenter/rseview  #"
+    echo "##################################################"
+    echo ""
+}
 
 #Check if user is root
 if ! [ $(id -u) = 0 ]; then
     clear
+    banner
     echo "This installation must be run as root!"
     echo ""
     exit 1
