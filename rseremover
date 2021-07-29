@@ -40,7 +40,6 @@ echo ""
 #Check if user is root
 if ! [ $(id -u) = 0 ]; then
     clear
-    banner
     echo "This installation must be run as root!"
     echo ""
     exit 1
