@@ -32,8 +32,6 @@ Options:
 <buffer> is lines displayed within the CLI.
 ```
 
-### 3.3 Usage:
-
 ## 4. Donation and help
 
 ### 4.1 Donation
