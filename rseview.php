@@ -13,7 +13,7 @@ if(isset($_GET['q'])) {
                         'query' => [
                                 'bool' => [
                                         'should' => [
-						'multi_match' => [ 'query' => $q, 'fields'=> ['DATE', 'HOST_FROM', 'MESSAGE']]
+						'multi_match' => [ 'query' => $q, 'fields'=> ['DATE', 'HOST_FROM', 'MESSAGE', 'LEGACY_MSGHDR']]
                                                 ]
                                         ]
                                 ],
@@ -72,11 +72,12 @@ function removeLastCharacter($string){
 for ($output_num = $total_results - 1; ; $output_num -= 1){
 	if ($output_num < "0"){
 		break;
-}
+	}
 	$output_date = $results[$output_num]['_source']['DATE'];
 	$output_host = $results[$output_num]['_source']['HOST_FROM'];
 	$output_message = $results[$output_num]['_source']['MESSAGE'];
-	echo ("\e[96m$output_date\033[0m" . " " . "\e[32m$output_host\033[0m" . " " . "\e[97m$output_message\033[0m"), PHP_EOL;
+        $output_msghdr = $results[$output_num]['_source']['LEGACY_MSGHDR'];
+	echo ("\033[33m$output_date\033[0m" . " " . "\033[32m$output_host\033[0m" . " " . "\033[11m$output_msghdr\033[0m" . " " . "\033[1m$output_message\033[0m"), PHP_EOL;
 }
 die();
 ?>
