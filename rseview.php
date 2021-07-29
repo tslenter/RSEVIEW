@@ -48,11 +48,14 @@ if(isset($_GET['a'])) {
         ]);
 }
 
-
-
 if($query['hits']['total']['value'] >=1) {
 	$results = $query['hits']['hits'];
 	$total_results = $query['hits']['total']['value'];
+}
+
+if (empty($total_results)) {
+        echo ('No results ...'), PHP_EOL;
+        die();
 }
 
 if ($total_results >= $b) {
