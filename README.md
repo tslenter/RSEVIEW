@@ -32,6 +32,8 @@ Options:
 <buffer> is lines displayed within the CLI.
 ```
 
+The default buffer size = 50
+
 ### 3.4 Example output:
 ```
 ##################################################
