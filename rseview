@@ -41,7 +41,7 @@ banner
 
 #Menu
 function show_options() {
-   echo "Usage rsview:"
+   echo "Usage rseview:"
    echo ""
    echo "-h,--help                          		Display help"
    echo "-s,--search <search string> <buffer>  		Search through logging"
