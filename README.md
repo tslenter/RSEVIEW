@@ -1,5 +1,5 @@
 ## 1. rseview
-Remote Syslog viewer for elasticsearch. Default the rsview command access the plaintext files. By using this app direct access is given to the elasticsearch engine for CLI output.
+Remote Syslog viewer for elasticsearch. Default the rsview command access the plaintext files. By using this app direct access is given to the elasticsearch engine for CLI output. Extracts data from the default Remote Syslog index.
 
 ## 3. Usage
 
