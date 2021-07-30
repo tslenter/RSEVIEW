@@ -13,16 +13,18 @@ if(isset($_GET['q'])) {
                         'query' => [
                                 'bool' => [
                                         'should' => [
-						'query_string' => [ 'query' => $q, 'fields'=> ['DATE', 'HOST_FROM', 'MESSAGE', 'LEGACY_MSGHDR']],
+						'query_string' => [ 'query' => $q, 'fields'=> ['DATE', 'HOST_FROM', 'MESSAGE', 'LEGACY_MSGHDR']]
                                                 ]
                                         ]
                                 ],
 			'sort' => [
 				'ISODATE' => [
 					'order' => 'desc'
-					]
+					],
+                                '_id' => [
+                                        'order' => 'desc'
+                                        ]
 				]
-
 			]
         ]);
 }
@@ -41,9 +43,11 @@ if(isset($_GET['a'])) {
                         'sort' => [
                                 'ISODATE' => [
                                         'order' => 'desc'
+                                        ],
+                                '_id' => [
+                                        'order' => 'desc'
                                         ]
                                 ]
-
                         ]
         ]);
 }
