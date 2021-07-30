@@ -6,6 +6,9 @@ parse_str(implode('&', array_slice($argv, 1)), $_GET);
 if(isset($_GET['q'])) {
         $q = $_GET['q'];
 	$b = $_GET['b'];
+	if ($b > 10000) {
+        	$b = 10000;
+	}
         $query = $es->search([
 		'size'=> $b,
 		'index' => 'rsx-syslog*',
@@ -31,6 +34,9 @@ if(isset($_GET['q'])) {
 
 if(isset($_GET['a'])) {
         $b = $_GET['b'];
+        if ($b > 10000) {
+                $b = 10000;
+        }
         $query = $es->search([
                 'size'=> $b,
 		'index' => 'rsx-syslog*',
