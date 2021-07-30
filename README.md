@@ -44,9 +44,11 @@ The default buffer size = 50
 #Donations: https://github.com/tslenter/rseview  #
 ##################################################
 
-3c08.f611.ac00: *Jul 29 09:47:53.091: %WIDS-4-SIG_ALARM: Attack is detected on Sig:Standard Id:2 Channel:1 Source MAC:0432.f417.8d87
-c89c.1da8.0010: *Jul 29 09:47:54.753: %WIDS-4-SIG_ALARM: Attack is detected on Sig:Standard Id:2 Channel:1 Source MAC:0432.f417.8d87
-c89c.1da8.0322: *Jul 29 09:47:53.802: %WIDS-4-SIG_ALARM: Attack is detected on Sig:Standard Id:2 Channel:1 Source MAC:0432.f417.8d87
+Jul 30 14:08:25.107 remotesyslog001.local CET: %C4K_HWPORTMAN-4-BLOCKEDTXQUEUE: Blocked transmit queue HwTxQId2 on Switch Phyport Gi2/10, count=2192543
+Jul 30 14:08:25.107 remotesyslog001.local CET: %C4K_HWPORTMAN-4-BLOCKEDTXQUEUE: Blocked transmit queue HwTxQId7 on Switch Phyport Gi2/10, count=2308115
+Jul 30 14:08:41.229 remotesyslog002.local CET: %PM-4-ERR_RECOVER: Attempting to recover from psecure-violation err-disable state on Gi7/48
+Jul 30 14:08:52.022 remotesyslog001.local CET: %PM-4-ERR_DISABLE: psecure-violation error detected on Gi7/48, putting Gi7/48 in err-disable state
+Jul 30 14:08:52.025 remotesyslog003.local CET: %PORT_SECURITY-2-PSECURE_VIOLATION: Security violation occurred, caused by MAC address 0060.9fa4.d39a on port GigabitEthernet7/48.
 ```
 
 ### 3.5 Activate index pattern:
