@@ -1,21 +1,21 @@
 ## 1. rseview
 Remote Syslog viewer for elasticsearch. Default the rsview command access the plaintext files. By using this app direct access is given to the elasticsearch engine for CLI output. Extracts data from the default Remote Syslog index.
 
-## 3. Usage
+## 2. Usage
 
-### 3.1 Installation:
+### 2.1 Installation:
 ```
 chmod +x rseinstaller
 ./rseinstaller
 ```
 
-### 3.2 Removal:
+### 2.2 Removal:
 ```
 chmod +x rseremover
 ./rseremover
 ```
 
-### 3.3 Usage:
+### 2.3 Usage:
 ```
 Run the rseview command with the following options:
 -h,--help                                       Display help
@@ -34,7 +34,7 @@ Options:
 
 The default buffer size = 50
 
-### 3.4 Example output:
+### 2.4 Example output:
 ```
 ##################################################
 #Remote Syslog Elasticsearch Viewer              #
@@ -51,7 +51,7 @@ Jul 30 14:08:52.022 remotesyslog001.local CET: %PM-4-ERR_DISABLE: psecure-violat
 Jul 30 14:08:52.025 remotesyslog003.local CET: %PORT_SECURITY-2-PSECURE_VIOLATION: Security violation occurred, caused by MAC address 0060.9fa4.d39a on port GigabitEthernet7/48.
 ```
 
-### 3.5 Activate index pattern:
+### 2.5 Activate index pattern:
 When a Elasticsearch only configuration is run activate the index pattern with the following command: 
 ```
 curl -X POST "http://localhost:5601/kibana/api/saved_objects/index-pattern/rsx-syslog-ng*" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d'
@@ -64,9 +64,9 @@ curl -X POST "http://localhost:5601/kibana/api/saved_objects/index-pattern/rsx-s
        '
 ```
 
-## 4. Donation and help
+## 3. Donation and help
 
-### 4.1 Donation
+### 3.1 Donation
 
 Crypto:
 
@@ -80,14 +80,14 @@ PayPal:
 
 [![paypal](https://www.paypalobjects.com/en_US/NL/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=KQKRPDQYHYR7W&currency_code=EUR&source=url)
 
-### 4.2 Help
+### 3.2 Help
 
 To improve the code and functions we like to have you help. Send your idea or code to: info@remotesyslog.com or create a pull request. We will review it and add it to this project.
 
-### 4.3 Funds
+### 3.3 Funds
 All donations and other funds will be used to cover cost of this project and to improve tests/plugins/core scripts. The roadmap will display new functions or products. Check https://www.remotesyslog.com for more information.
 
-## 5. License
+## 4. License
 
 "rseview" is a free application that can be used to view syslog messages.
 
