@@ -13,12 +13,12 @@ if(isset($_GET['q'])) {
                         'query' => [
                                 'bool' => [
                                         'should' => [
-						'query_string' => [ 'query' => $q, 'fields'=> ['DATE', 'HOST_FROM', 'MESSAGE', 'LEGACY_MSGHDR']]
+						'query_string' => [ 'query' => $q, 'fields'=> ['R_ISODATE', 'HOST_FROM', 'MESSAGE', 'LEGACY_MSGHDR']]
                                                 ]
                                         ]
                                 ],
 			'sort' => [
-				'ISODATE' => [
+				'R_ISODATE' => [
 					'order' => 'desc'
 					],
                                 '_id' => [
@@ -41,7 +41,7 @@ if(isset($_GET['a'])) {
 					]
                                 ],
                         'sort' => [
-                                'ISODATE' => [
+                                'R_ISODATE' => [
                                         'order' => 'desc'
                                         ],
                                 '_id' => [
@@ -77,7 +77,7 @@ for ($output_num = $total_results - 1; ; $output_num -= 1){
 	if ($output_num < "0"){
 		break;
 	}
-	$output_date = $results[$output_num]['_source']['DATE'];
+	$output_date = $results[$output_num]['_source']['R_ISODATE'];
 	$output_host = $results[$output_num]['_source']['HOST_FROM'];
 	$output_message = $results[$output_num]['_source']['MESSAGE'];
         $output_msghdr = $results[$output_num]['_source']['LEGACY_MSGHDR'];
