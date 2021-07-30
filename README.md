@@ -49,6 +49,19 @@ c89c.1da8.0010: *Jul 29 09:47:54.753: %WIDS-4-SIG_ALARM: Attack is detected on S
 c89c.1da8.0322: *Jul 29 09:47:53.802: %WIDS-4-SIG_ALARM: Attack is detected on Sig:Standard Id:2 Channel:1 Source MAC:0432.f417.8d87
 ```
 
+### 3.4 Activate index pattern:
+When a Elasticsearch only configuration is run activate the index pattern with the following command: 
+```
+curl -X POST "http://localhost:5601/kibana/api/saved_objects/index-pattern/rsx-syslog-ng*" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d'
+       {
+        "attributes": {
+        "title": "rsx-syslog-ng*",
+        "timeFieldName": "@timestamp"
+        }
+       }
+       '
+```
+
 ## 4. Donation and help
 
 ### 4.1 Donation
