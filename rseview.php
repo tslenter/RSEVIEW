@@ -72,10 +72,6 @@ if ($total_results >= $b) {
 	$total_results = $b;
 }
 
-function removeLastCharacter($string){
-    return preg_replace('[\d$]', '', $string);
-}
-
 #Debug results array
 #        echo '<pre>', print_r($query), '</pre>';
 #	 echo '<pre>', print_r($query['hits']['hits']['0']['_source']['MESSAGE']), '</pre>';
