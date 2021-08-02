@@ -51,8 +51,8 @@ Jul 30 14:08:52.022 remotesyslog001.local CET: %PM-4-ERR_DISABLE: psecure-violat
 Jul 30 14:08:52.025 remotesyslog003.local CET: %PORT_SECURITY-2-PSECURE_VIOLATION: Security violation occurred, caused by MAC address 0060.9fa4.d39a on port GigabitEthernet7/48.
 ```
 
-### 2.5 Activate index pattern:
-When a Elasticsearch only configuration is run activate the index pattern with the following command: 
+### 2.5 Useful query's:
+When a Remote Syslog Elasticsearch only configuration is installed, activate the index pattern with the following command: 
 ```
 curl -X POST "http://localhost:5601/kibana/api/saved_objects/index-pattern/rsx-syslog-ng*" -H 'kbn-xsrf: true' -H 'Content-Type: application/json' -d'
        {
