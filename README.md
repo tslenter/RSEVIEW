@@ -64,6 +64,11 @@ curl -X POST "http://localhost:5601/kibana/api/saved_objects/index-pattern/rsx-s
        '
 ```
 
+Delete the main index with:
+```
+curl -XDELETE --header 'Content-Type: application/json' http://localhost:9200/rsx* | jq
+```
+
 ## 3. Donation and help
 
 ### 3.1 Donation
