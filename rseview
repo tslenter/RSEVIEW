@@ -35,7 +35,7 @@ function banner() {
 
 #Variables
 default_buffer=50
-RSCONF=/opt/rseview
+RSCONF=/opt/RSEVIEW
 
 banner
 
