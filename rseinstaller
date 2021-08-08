@@ -31,7 +31,7 @@ function banner() {
     echo "#Remote Syslog Elasticsearch Viewer              #"
     echo "#More information: https://www.remotesyslog.com  #"
     echo "#Remote Syslog viewer for Elasticsearch          #"
-    echo "#Version: RSE 0.1                                #"
+    echo "#Version: RSEVIEW Installer 0.1                  #"
     echo "#Donations: https://github.com/tslenter/rseview  #"
     echo "##################################################"
     echo ""
