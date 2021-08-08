@@ -21,9 +21,8 @@
 #E-mail: info@remotesyslog.com
 
 #Variables
-RSCONF=/opt/rseview
+RSCONF=/opt/RSEVIEW
 RSPATH=$(pwd)
-RSDEST=/opt/RS
 UB_PATH=/usr/bin
 
 function banner() {
