@@ -39,6 +39,66 @@ RSCONF=/opt/RSEVIEW
 
 banner
 
+function lc_policy() {
+   urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
+   if [[ $urlstatus =~ "200" ]]; then
+      echo "Elasticsearch service is running ..."
+   else
+      echo "Elasticsearch not in time activated? Use CLI to setup the lifecycle ..."
+      exit
+   fi
+   echo "Set new lifecycle policy ..."
+   read -p "Change amount in GB to new value (numbers only): " gb
+   read -p "Change amount in days to new value (numbers only): " days
+   if [ -z "$gb" ]; then
+      echo "No gb variable detected ..."
+      exit
+   fi
+   if [ -z "$days" ]; then
+      echo "No days variable detected ..."
+      exit
+   fi
+   if [[ $days == ?(-)+([0-9]) ]]; then
+      echo "Continue ..."
+   else
+      echo "Days is no number ..."
+      exit
+   fi
+   if [[ $gb == ?(-)+([0-9]) ]]; then
+      echo "Continue ..."
+   else
+      echo "Max shard size is no number ..."
+      exit
+   fi
+   days+="d"
+   gb+="gb"
+   curl -XPUT --header 'Content-Type: application/json' http://localhost:9200/_ilm/policy/rs-policy?pretty=true --data '
+   {
+    "policy": {
+      "phases": {
+        "hot": {
+          "min_age": "0ms",
+          "actions": {
+            "rollover": {
+              "max_primary_shard_size": "'"$gb"'",
+              "max_age": "'"$days"'"
+            }
+          }
+        },
+        "delete": {
+          "min_age": "'"$days"'",
+          "actions": {
+            "delete": {
+              "delete_searchable_snapshot": true
+            }
+          }
+        }
+      }
+    }
+   }'
+   echo "Lifecycle policy changed ..."
+}
+
 #Menu
 function show_options() {
    echo "Usage rseview:"
@@ -49,6 +109,8 @@ function show_options() {
    echo "-l,--live <buffer>                    		View live logging"
    echo "-ls,--livesearch <search string> <buffer>  	Search through live logging"
    echo "-t,--testmessage                   		Send a test message"
+   echo "-c,--clearlog					Clear log index"
+   echo "-p,--lifecyclepolicy				Change lifecycle policy"
    echo ""
 }
 
@@ -82,6 +144,22 @@ case $1 in
 -t|--testmessage)
         logger -n 127.0.0.1 -d 'This is a UDP test message!'; logger -T -P 514 -n 127.0.0.1 'This is a TCP test message!'
         echo "Sending UDP and TCP test message! Check logging!"
+        ;;
+-c|--clearlog)
+        urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
+        if [[ $urlstatus =~ "200" ]]; then
+               echo "Elasticsearch service is running ..."
+        else
+               echo "Elasticsearch not in time activated? Use CLI to setup the lifecycle ..."
+               exit
+        fi
+        curl -XDELETE --header "Content-Type: application/json" http://localhost:9200/rsx-syslog*?pretty=true
+        echo "Total logging archive cleared!"
+        echo ""
+        ;;
+-p|--lifecyclepolicy)
+        lc_policy
+        echo ""
         ;;
         *)
         show_options
