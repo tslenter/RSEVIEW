@@ -67,7 +67,7 @@ chmod +x $RSCONF/rsbanner
 #Start installation
 echo "Start installation ..."
 apt update
-apt install php-curl -y
+apt install php-curl curl -y
 service apache2 restart
 curl -s http://getcomposer.org/installer | php
 php composer.phar install --quiet --no-interaction --working-dir=$RSCONF
