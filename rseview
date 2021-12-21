@@ -39,12 +39,24 @@ RSCONF=/opt/RSEVIEW
 
 banner
 
+function lc_policy_rc() {
+   urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
+   if [[ $urlstatus =~ "200" ]]; then
+      echo "Elasticsearch service is running ..."
+   else
+      echo "Elasticsearch not running? Please check the Elasticsearch service ..."
+      exit
+   fi
+   curl -XGET --header 'Cent-Type: application/json' http://localhost:9200/_ilm/policy/rs-policy | jq '.[] | .policy'
+   echo "Lifecycle policy requested ..."
+}
+
 function lc_policy() {
    urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
    if [[ $urlstatus =~ "200" ]]; then
       echo "Elasticsearch service is running ..."
    else
-      echo "Elasticsearch not in time activated? Use CLI to setup the lifecycle ..."
+      echo "Elasticsearch not running? Please check the Elasticsearch service ..."
       exit
    fi
    echo "Set new lifecycle policy ..."
@@ -98,6 +110,7 @@ function show_options() {
    echo "-t,--testmessage                   		Send a test message"
    echo "-c,--clearlog					Clear log index"
    echo "-p,--lifecyclepolicy				Change lifecycle policy"
+   echo "-ps,--pslifecyclepolicy                        View lifecycle policy"
    echo ""
 }
 
@@ -146,6 +159,10 @@ case $1 in
         ;;
 -p|--lifecyclepolicy)
         lc_policy
+        echo ""
+        ;;
+-ps|--pslifecyclepolicy)
+        lc_policy_rc
         echo ""
         ;;
         *)
