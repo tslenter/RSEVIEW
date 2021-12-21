@@ -1,5 +1,4 @@
 #!/bin/bash
-
 #License:
 #"Remote Syslog" is a free application what can be used to view syslog messages.
 #Copyright (C) 2022 Tom Slenter
@@ -19,7 +18,6 @@
 #For more information contact the author:
 #Name author: Tom Slenter
 #E-mail: info@remotesyslog.com
-
 #Banner
 function banner() {
     echo ""
@@ -32,11 +30,9 @@ function banner() {
     echo "##################################################"
     echo ""
 }
-
 #Variables
 default_buffer=50
 RSCONF=/opt/RSEVIEW
-
 banner
 
 function lc_policy_rc() {
@@ -56,7 +52,7 @@ function lc_policy() {
    if [[ $urlstatus =~ "200" ]]; then
       echo "Elasticsearch service is running ..."
    else
-      echo "Elasticsearch not running? Please check the Elasticsearch service ..."
+      echo "Elasticsearch not in time activated? Use CLI to setup the lifecycle ..."
       exit
    fi
    echo "Set new lifecycle policy ..."
@@ -70,19 +66,20 @@ function lc_policy() {
       echo "No days variable detected ..."
       exit
    fi
-   if [[ $gb == ?(-)+([0-9]) ]]; then
-      echo "Continue ..."
-   else
-      echo "Max shard size is no number ..."
-      exit
-   fi
    if [[ $days == ?(-)+([0-9]) ]]; then
       echo "Continue ..."
    else
       echo "Days is no number ..."
       exit
    fi
+   if [[ $gb == ?(-)+([0-9]) ]]; then
+      echo "Continue ..."
+   else
+      echo "Max shard size is no number ..."
+      exit
+   fi
    days+="d"
+   gb+="gb"
    curl -XPUT --header 'Content-Type: application/json' http://localhost:9200/_ilm/policy/rs-policy?pretty=true --data '
    {
     "policy": {
@@ -109,7 +106,6 @@ function lc_policy() {
    }'
    echo "Lifecycle policy changed ..."
 }
-
 #Menu
 function show_options() {
    echo "Usage rseview:"
@@ -125,7 +121,6 @@ function show_options() {
    echo "-ps,--pslifecyclepolicy                         View lifecycle policy"
    echo ""
 }
-
 #Options
 case $1 in
 -h|--help)
