@@ -110,7 +110,7 @@ function show_options() {
    echo "-t,--testmessage                   		Send a test message"
    echo "-c,--clearlog					Clear log index"
    echo "-p,--lifecyclepolicy				Change lifecycle policy"
-   echo "-ps,--pslifecyclepolicy                        View lifecycle policy"
+   echo "-ps,--pslifecyclepolicy                         View lifecycle policy"
    echo ""
 }
 
