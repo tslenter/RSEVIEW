@@ -60,9 +60,20 @@ function lc_policy() {
       exit
    fi
    echo "Set new lifecycle policy ..."
+   read -p "Change amount in GB to new value (numbers only): " gb
    read -p "Change amount in days to new value (numbers only): " days
+   if [ -z "$gb" ]; then
+      echo "No gb variable detected ..."
+      exit
+   fi
    if [ -z "$days" ]; then
       echo "No days variable detected ..."
+      exit
+   fi
+   if [[ $gb == ?(-)+([0-9]) ]]; then
+      echo "Continue ..."
+   else
+      echo "Max shard size is no number ..."
       exit
    fi
    if [[ $days == ?(-)+([0-9]) ]]; then
@@ -76,6 +87,15 @@ function lc_policy() {
    {
     "policy": {
       "phases": {
+        "hot": {
+          "min_age": "0ms",
+          "actions": {
+            "rollover": {
+              "max_primary_shard_size": "'"$gb"'",
+              "max_age": "'"$days"'"
+            }
+          }
+        },
         "delete": {
           "min_age": "'"$days"'",
           "actions": {
