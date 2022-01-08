@@ -51,7 +51,7 @@ function lc_policy_rc() {
       exit
    fi
    echo "Deployed lifecycle policy ..."
-   curl --fail --silent -XGET --header 'Content-Type: application/json' http://localhost:9200/rsx-*/_ilm/explain?pretty
+   curl --fail --silent -XGET --header 'Content-Type: application/json' http://localhost:9200/rse-*/_ilm/explain?pretty
    echo "Configured lifecycle policy ..."
    curl --fail --silent -XGET --header 'Cent-Type: application/json' http://localhost:9200/_ilm/policy/rs-policy | jq '.[] | .policy'
 }
@@ -184,12 +184,12 @@ case $1 in
                echo "Elasticsearch not in time activated? Use CLI to setup the lifecycle ..."
                exit
         fi
-        curl -XDELETE --header "Content-Type: application/json" http://localhost:9200/rsx-syslog*?pretty=true
+        curl -XDELETE --header "Content-Type: application/json" http://localhost:9200/rse-syslog*?pretty=true
         echo "Recreate alias ..."
-        curl -XPUT --header 'Content-Type: application/json' http://localhost:9200/rsx-syslog-ng-000001?pretty -d '
+        curl -XPUT --header 'Content-Type: application/json' http://localhost:9200/rse-syslog-ng-000001?pretty -d '
         {
               "aliases": {
-                  "rsx-syslog":{
+                  "rse-syslog":{
                      "is_write_index": true
                   }
               }
@@ -228,7 +228,7 @@ case $1 in
                exit
         fi
         echo "Cluster health info:"
-        curl --fail --silent -XGET 'http://127.0.0.1:9200/_cluster/health/rsx*?pretty'
+        curl --fail --silent -XGET 'http://127.0.0.1:9200/_cluster/health/rse*?pretty'
         echo ""
         ;;
 -u|--usage)
