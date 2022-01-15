@@ -119,6 +119,7 @@ function show_options() {
    echo "-c,--clearlog					Clear log index"
    echo "-p,--lifecyclepolicy				Change lifecycle policy"
    echo "-ps,--pslifecyclepolicy                         View lifecycle policy"
+   echo "-x,--indexinfo                                  View indexes"
    echo ""
 }
 #Options
@@ -161,6 +162,17 @@ case $1 in
                exit
         fi
         curl -XDELETE --header "Content-Type: application/json" http://localhost:9200/rsx-syslog*?pretty=true
+        echo "Recreate alias ..."
+        curl -XPUT --header 'Content-Type: application/json' http://localhost:9200/rsx-syslog-ng-000001?pretty -d '
+        {
+              "aliases": {
+                  "rsx-syslog":{
+                     "is_write_index": true
+                  }
+              }
+        }'
+        echo "Send testmessage ..."
+        logger -n 127.0.0.1 -d 'This is a UDP test message!'; logger -T -P 514 -n 127.0.0.1 'This is a TCP test message!'
         echo "Total logging archive cleared!"
         echo ""
         ;;
@@ -170,6 +182,18 @@ case $1 in
         ;;
 -ps|--pslifecyclepolicy)
         lc_policy_rc
+        echo ""
+        ;;
+-x|--indexinfo)
+                urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
+        if [[ $urlstatus =~ "200" ]]; then
+               echo "Elasticsearch service is running ..."
+        else
+               echo "Elasticsearch not in time activated? Use CLI to setup the lifecycle ..."
+               exit
+        fi
+        echo "Cluster index info:"
+        curl -XGET --header 'Content-Type: application/json' http://localhost:9200/_cat/indices?v
         echo ""
         ;;
         *)
