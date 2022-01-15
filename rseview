@@ -43,8 +43,10 @@ function lc_policy_rc() {
       echo "Elasticsearch not running? Please check the Elasticsearch service ..."
       exit
    fi
-   curl -XGET --header 'Cent-Type: application/json' http://localhost:9200/_ilm/policy/rs-policy | jq '.[] | .policy'
-   echo "Lifecycle policy requested ..."
+   echo "Deployed lifecycle policy ..."
+   curl --fail --silent -XGET --header 'Content-Type: application/json' http://localhost:9200/rsx-*/_ilm/explain?pretty
+   echo "Configured lifecycle policy ..."
+   curl --fail --silent -XGET --header 'Cent-Type: application/json' http://localhost:9200/_ilm/policy/rs-policy | jq '.[] | .policy'
 }
 
 function lc_policy() {
@@ -57,7 +59,8 @@ function lc_policy() {
    fi
    echo "Set new lifecycle policy ..."
    read -p "Change amount in GB to new value (numbers only): " gb
-   read -p "Change amount in days to new value (numbers only): " days
+   read -p "Change amount in days for rollover (numbers only): " days
+   read -p "Change amount in days for deletion (numbers only): " days2
    if [ -z "$gb" ]; then
       echo "No gb variable detected ..."
       exit
@@ -66,7 +69,17 @@ function lc_policy() {
       echo "No days variable detected ..."
       exit
    fi
+   if [ -z "$days2" ]; then
+      echo "No days variable detected ..."
+      exit
+   fi
    if [[ $days == ?(-)+([0-9]) ]]; then
+      echo "Continue ..."
+   else
+      echo "Days is no number ..."
+      exit
+   fi
+   if [[ $days2 == ?(-)+([0-9]) ]]; then
       echo "Continue ..."
    else
       echo "Days is no number ..."
@@ -80,6 +93,7 @@ function lc_policy() {
    fi
    days+="d"
    gb+="gb"
+   days2+="d"
    curl -XPUT --header 'Content-Type: application/json' http://localhost:9200/_ilm/policy/rs-policy?pretty=true --data '
    {
     "policy": {
@@ -94,7 +108,7 @@ function lc_policy() {
           }
         },
         "delete": {
-          "min_age": "'"$days"'",
+          "min_age": "'"$days2"'",
           "actions": {
             "delete": {
               "delete_searchable_snapshot": true
