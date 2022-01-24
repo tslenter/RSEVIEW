@@ -133,7 +133,8 @@ function show_options() {
    echo "-c,--clearlog					Clear log index"
    echo "-p,--lifecyclepolicy				Change lifecycle policy"
    echo "-ps,--pslifecyclepolicy                         View lifecycle policy"
-   echo "-x,--indexinfo                                  View indexes"
+   echo "-xi,--indexinfo                                 View indexes"
+   echo "-xh,--healthinfo                                View elasticsearch health"
    echo ""
 }
 #Options
@@ -198,7 +199,7 @@ case $1 in
         lc_policy_rc
         echo ""
         ;;
--x|--indexinfo)
+-xi|--indexinfo)
                 urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
         if [[ $urlstatus =~ "200" ]]; then
                echo "Elasticsearch service is running ..."
@@ -207,7 +208,19 @@ case $1 in
                exit
         fi
         echo "Cluster index info:"
-        curl -XGET --header 'Content-Type: application/json' http://localhost:9200/_cat/indices?v
+        curl --fail --silent -XGET --header 'Content-Type: application/json' http://localhost:9200/_cat/indices?v
+        echo ""
+        ;;
+-xh|--healthinfo)
+                urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
+        if [[ $urlstatus =~ "200" ]]; then
+               echo "Elasticsearch service is running ..."
+        else
+               echo "Elasticsearch not in time activated? Use CLI to setup the lifecycle ..."
+               exit
+        fi
+        echo "Cluster health info:"
+        curl --fail --silent -XGET 'http://127.0.0.1:9200/_cluster/health/rsx*?pretty'
         echo ""
         ;;
         *)
