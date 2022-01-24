@@ -35,6 +35,13 @@ default_buffer=50
 RSCONF=/opt/RSEVIEW
 banner
 
+function usage() {
+   echo "Disk usage:"
+   df -h
+   echo "Ram usage:"
+   free -h
+}
+
 function lc_policy_rc() {
    urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
    if [[ $urlstatus =~ "200" ]]; then
@@ -135,6 +142,7 @@ function show_options() {
    echo "-ps,--pslifecyclepolicy                         View lifecycle policy"
    echo "-xi,--indexinfo                                 View indexes"
    echo "-xh,--healthinfo                                View elasticsearch health"
+   echo "-u,--usage                                      View disk / ram usage"
    echo ""
 }
 #Options
@@ -221,6 +229,10 @@ case $1 in
         fi
         echo "Cluster health info:"
         curl --fail --silent -XGET 'http://127.0.0.1:9200/_cluster/health/rsx*?pretty'
+        echo ""
+        ;;
+-u|--usage)
+        usage
         echo ""
         ;;
         *)
