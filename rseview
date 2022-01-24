@@ -200,7 +200,7 @@ case $1 in
         echo ""
         ;;
 -xi|--indexinfo)
-                urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
+        urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
         if [[ $urlstatus =~ "200" ]]; then
                echo "Elasticsearch service is running ..."
         else
@@ -212,7 +212,7 @@ case $1 in
         echo ""
         ;;
 -xh|--healthinfo)
-                urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
+        urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
         if [[ $urlstatus =~ "200" ]]; then
                echo "Elasticsearch service is running ..."
         else
