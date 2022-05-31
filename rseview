@@ -25,7 +25,7 @@ function banner() {
     echo "#Remote Syslog Elasticsearch Viewer              #"
     echo "#More information: https://www.remotesyslog.com  #"
     echo "#Remote Syslog viewer for Elasticsearch          #"
-    echo "#Version: RSEVIEW 0.1                            #"
+    echo "#Version: RSEVIEW 0.2                            #"
     echo "#URL: https://github.com/tslenter/rseview        #"
     echo "#Donation: https://github.com/tslenter/RS        #"
     echo "##################################################"
@@ -34,6 +34,8 @@ function banner() {
 #Variables
 default_buffer=50
 RSCONF=/opt/RSEVIEW
+USERNAME=
+PASSWORD=
 banner
 
 function usage() {
@@ -44,7 +46,7 @@ function usage() {
 }
 
 function lc_policy_rc() {
-   urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
+   urlstatus="$(curl --fail --silent -XGET http://$USERNAME:$PASSWORD@localhost:9200/_ilm/status -I | egrep 200)"
    if [[ $urlstatus =~ "200" ]]; then
       echo "Elasticsearch service is running ..."
    else
@@ -52,13 +54,13 @@ function lc_policy_rc() {
       exit
    fi
    echo "Deployed lifecycle policy ..."
-   curl --fail --silent -XGET --header 'Content-Type: application/json' http://localhost:9200/rse-*/_ilm/explain?pretty
+   curl --fail --silent -XGET --header 'Content-Type: application/json' http://$USERNAME:$PASSWORD@localhost:9200/rse-*/_ilm/explain?pretty
    echo "Configured lifecycle policy ..."
-   curl --fail --silent -XGET --header 'Cent-Type: application/json' http://localhost:9200/_ilm/policy/rs-policy | jq '.[] | .policy'
+   curl --fail --silent -XGET --header 'Cent-Type: application/json' http://$USERNAME:$PASSWORD@localhost:9200/_ilm/policy/rs-policy | jq '.[] | .policy'
 }
 
 function lc_policy() {
-   urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
+   urlstatus="$(curl --fail --silent -XGET http://$USERNAME:$PASSWORD@localhost:9200/_ilm/status -I | egrep 200)"
    if [[ $urlstatus =~ "200" ]]; then
       echo "Elasticsearch service is running ..."
    else
@@ -102,7 +104,7 @@ function lc_policy() {
    days+="d"
    gb+="gb"
    days2+="d"
-   curl -XPUT --header 'Content-Type: application/json' http://localhost:9200/_ilm/policy/rs-policy?pretty=true --data '
+   curl -XPUT --header 'Content-Type: application/json' http://$USERNAME:$PASSWORD@localhost:9200/_ilm/policy/rs-policy?pretty=true --data '
    {
     "policy": {
       "phases": {
@@ -178,16 +180,16 @@ case $1 in
         echo "Sending UDP and TCP test message! Check logging!"
         ;;
 -c|--clearlog)
-        urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
+        urlstatus="$(curl --fail --silent -XGET http://$USERNAME:$PASSWORD@localhost:9200/_ilm/status -I | egrep 200)"
         if [[ $urlstatus =~ "200" ]]; then
                echo "Elasticsearch service is running ..."
         else
                echo "Elasticsearch not in time activated? Use CLI to setup the lifecycle ..."
                exit
         fi
-        curl -XDELETE --header "Content-Type: application/json" http://localhost:9200/rse-syslog*?pretty=true
+        curl -XDELETE --header "Content-Type: application/json" http://$USERNAME:$PASSWORD@localhost:9200/rse-syslog*?pretty=true
         echo "Recreate alias ..."
-        curl -XPUT --header 'Content-Type: application/json' http://localhost:9200/rse-syslog-ng-000001?pretty -d '
+        curl -XPUT --header 'Content-Type: application/json' http://$USERNAME:$PASSWORD@localhost:9200/rse-syslog-ng-000001?pretty -d '
         {
               "aliases": {
                   "rse-syslog":{
@@ -209,7 +211,7 @@ case $1 in
         echo ""
         ;;
 -xi|--indexinfo)
-        urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
+        urlstatus="$(curl --fail --silent -XGET http://$USERNAME:$PASSWORD@localhost:9200/_ilm/status -I | egrep 200)"
         if [[ $urlstatus =~ "200" ]]; then
                echo "Elasticsearch service is running ..."
         else
@@ -217,11 +219,11 @@ case $1 in
                exit
         fi
         echo "Cluster index info:"
-        curl --fail --silent -XGET --header 'Content-Type: application/json' http://localhost:9200/_cat/indices?v
+        curl --fail --silent -XGET --header 'Content-Type: application/json' http://$USERNAME:$PASSWORD@localhost:9200/_cat/indices?v
         echo ""
         ;;
 -xh|--healthinfo)
-        urlstatus="$(curl --fail --silent -XGET http://localhost:9200/_ilm/status -I | egrep 200)"
+        urlstatus="$(curl --fail --silent -XGET http://$USERNAME:$PASSWORD@localhost:9200/_ilm/status -I | egrep 200)"
         if [[ $urlstatus =~ "200" ]]; then
                echo "Elasticsearch service is running ..."
         else
@@ -229,7 +231,7 @@ case $1 in
                exit
         fi
         echo "Cluster health info:"
-        curl --fail --silent -XGET 'http://127.0.0.1:9200/_cluster/health/rse*?pretty'
+        curl --fail --silent -XGET 'http://$USERNAME:$PASSWORD@127.0.0.1:9200/_cluster/health/rse*?pretty'
         echo ""
         ;;
 -u|--usage)
