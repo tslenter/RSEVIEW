@@ -31,7 +31,7 @@ function banner() {
     echo "#Remote Syslog Elasticsearch Viewer              #"
     echo "#More information: https://www.remotesyslog.com  #"
     echo "#Remote Syslog viewer for Elasticsearch          #"
-    echo "#Version: RSEVIEW Installer 0.2                  #"
+    echo "#Version: RSEVIEW Installer 0.3                  #"
     echo "#URL: https://github.com/tslenter/rseview        #"
     echo "#Donation: https://github.com/tslenter/RS        #"
     echo "##################################################"
@@ -68,7 +68,11 @@ chmod +x $RSCONF/rsbanner
 #Start installation
 echo "Start installation ..."
 apt update
-apt install php-curl curl -y
+apt install php-curl curl php -y
 service apache2 restart
-curl -s http://getcomposer.org/installer | php
-php composer.phar install --quiet --no-interaction --working-dir=$RSCONF
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+php composer-setup.php --install-dir=/usr/bin --filename=composer
+composer self-update --2
+composer require elasticsearch/elasticsearch --quiet --no-interaction --working-dir=$RSCONF
+#curl -s http://getcomposer.org/installer | php
+#php composer.phar install --quiet --no-interaction --working-dir=$RSCONF
