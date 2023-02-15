@@ -70,6 +70,7 @@ echo "Start installation ..."
 apt update
 apt install php-curl curl zip unzip php-zip -y
 service apache2 restart
+ssh-keyscan github.com >> ~/.ssh/known_hosts
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php --install-dir=/usr/bin --filename=composer
 composer self-update --2
