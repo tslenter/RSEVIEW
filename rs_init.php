@@ -8,6 +8,7 @@ $hosts = [
     ]
 ];
 require_once '/opt/RSEVIEW/vendor/autoload.php';
-use Elasticsearch\ClientBuilder;
-$es = ClientBuilder::create()->setHosts($hosts)->build();
+//use Elasticsearch\ClientBuilder;
+//$es = ClientBuilder::create()->setHosts($hosts)->build();
+$es = Elastic\Elasticsearch\ClientBuilder::create()->build();
 ?>

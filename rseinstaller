@@ -68,11 +68,11 @@ chmod +x $RSCONF/rsbanner
 #Start installation
 echo "Start installation ..."
 apt update
-apt install php-curl curl php -y
+apt install php-curl curl php zip unzip php-zip -y
 service apache2 restart
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php --install-dir=/usr/bin --filename=composer
 composer self-update --2
-composer require elasticsearch/elasticsearch --quiet --no-interaction --working-dir=$RSCONF
+composer require elasticsearch/elasticsearch --prefer-source --quiet --no-interaction --working-dir=$RSCONF -o
 #curl -s http://getcomposer.org/installer | php
 #php composer.phar install --quiet --no-interaction --working-dir=$RSCONF
