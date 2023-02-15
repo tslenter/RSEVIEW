@@ -68,7 +68,7 @@ chmod +x $RSCONF/rsbanner
 #Start installation
 echo "Start installation ..."
 apt update
-apt install php-curl curl php zip unzip php-zip -y
+apt install php-curl curl zip unzip php-zip -y
 service apache2 restart
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php --install-dir=/usr/bin --filename=composer
